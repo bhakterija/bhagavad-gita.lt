@@ -1,0 +1,12 @@
+{
+	"ImportPath": "github.com/bhakterija/bhagavad-gita.lt",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.1-27-g757bef9",
+			"Rev": "757bef944d0f21880861c2dd9c871ca543023cba"
+		}
+	]
+}
