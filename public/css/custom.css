@@ -1,0 +1,78 @@
+h2
+{
+  text-align: center;
+}
+
+h3
+{
+  text-align: center;
+}
+
+h4
+{
+  text-align: center;
+}
+
+.devanagari-div
+{
+  text-align: center;
+  font-size: 18px;
+}
+
+.iast-div
+{
+  text-align: center;
+}
+
+.player-div
+{
+  text-align: center;
+}
+
+.synonyms-div
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+.translation-div
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  font-weight: bold;
+}
+
+.purport-div
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+blockquote
+{
+  text-align: center;
+  font-style: italic;
+  border: inherit;
+  font-size: inherit;
+  padding: inherit;
+}
+
+q
+{
+  font-style: italic;
+  font-size: inherit;
+}
+q::before {
+    content: none;
+}
+q::after {
+    content: none;
+}
+
+audio {
+  width: 300px;
+  margin:20px;
+}

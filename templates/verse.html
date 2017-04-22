@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="{{ .languageId }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="{{.keywords}}">
+  <title>{{.title}}</title>
+  <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/public/css/custom.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav> <!-- Prev/Up/Next navigation -->
+    <div>
+      <table style="margin-left: auto; margin-right: auto; width: 20%" border="1">
+        <tr>
+  			<td style="text-align: center;">
+          {{.prev}}
+        </td>
+        <td style="text-align: center;">
+  				<a href="#">^</a>
+  			</td>
+        <td style="text-align: center;">
+          {{.next}}
+        </td>
+      </table>
+    </div>
+  </nav>
+
+<h2>Verse {{.chapterNum}}.{{.verseNum}}</h2>
+
+  <div class="devanagari-div" lang="sa-deva">
+    <p id="devanagari">
+    {{range .verse.Devanagari }}
+      {{.}}<br>
+    {{end}}
+    </p>
+  </div>
+
+  <div class="player-div">
+    <audio id="audio1" controls="controls">
+      <source src="/public/media/audio/1/{{ .chapterNum }}-{{ .verseNum }}.ogg" type="audio/ogg" />
+      <source src="/public/media/audio/1/{{ .chapterNum }}-{{ .verseNum }}.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+
+  <div class="iast-div" lang="sa-latn">
+    <p id="iast">
+      {{range .verse.IAST }}
+      {{.}}<br>
+    {{end}}
+    </p>
+  </div>
+
+  <div class="synonyms-div">
+    <p>{{.synonyms}}</p>
+  </div>
+
+  <div class="translation-div" lang="{{.languageId}}">
+    <h3>Vertimas</h3>
+    <p>{{.verse.Translation}}</p>
+  </div>
+
+  <div class="purport-div" lang="{{.languageId}}">
+    <h3>Komentaras</h3>
+    {{range .verse.Purport }}
+      {{.}}
+    {{end}}
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+  <script src="/public/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+    var devanagariElem = document.getElementById("devanagari");
+    var devanagariOrigHTML = devanagariElem.innerHTML;
+    var devanagariPlayingWordIndex = -1; // currently playing word
+    // var devanagariWordTimings = [0,      3.8,      5.8, 7.2,9, 9, 10, 11, 13.5, 16, 18, 21];
+    var devanagariWordTimings = {{.verse.DevanagariWordTimings}};
+
+    var iastElem = document.getElementById("iast");
+    var iastOrigHTML = iastElem.innerHTML;
+    var iastPlayingWordIndex = -1;
+    // var iastWordTimings       = [0, 1.7, 3.8, 4.5, 5.8, 7.2,   9, 10, 11, 13.5, 16, 18, 21];
+    var iastWordTimings       = {{.verse.IASTWordTimings}};
+
+    function highlightWord(element, hiIndex, playerTime) {
+      var text = "";
+      var curIndex = 0;
+      for (var i = 0, childNodes = element.childNodes; i < childNodes.length; i ++) {
+        if (childNodes[i].nodeType === 3 /* document.TEXT_NODE */) {
+          var words = childNodes[i].nodeValue.split(/\s+/);
+          for (var j = 0; j < words.length; j++) {
+            if (words[j] === "") continue;
+            if (curIndex === hiIndex && words[j] !== "।") {
+              console.log(playerTime + " " + hiIndex + " " + words[j]);
+              text += "<span style=\"background:yellow\">" + words[j] + "</span> ";
+            } else {
+              text += words[j] + " ";
+            }
+            curIndex++;
+          }
+        } else {
+          text += childNodes[i].outerHTML;
+        }
+      }
+      return text;
+    }
+
+    var audio1 = document.getElementById('audio1');
+
+    audio1.addEventListener('canplay', function() {
+      // console.log("Event - canplay");
+      devanagariPlayingWordIndex = -1;
+      iastPlayingWordIndex = -1;
+    },false);
+
+    audio1.addEventListener('play', function() {
+      // console.log("Event - play");
+    },false);
+
+    audio1.addEventListener('timeupdate', function() {
+      if (iastWordTimings) {
+        for (var i = 0; i < iastWordTimings.length; i++) {
+          if (i !== iastPlayingWordIndex && audio1.currentTime >= iastWordTimings[i] && audio1.currentTime < iastWordTimings[i+1]) {
+            iastPlayingWordIndex = i;
+            iastElem.innerHTML = iastOrigHTML;
+            iastElem.innerHTML = highlightWord(iastElem, iastPlayingWordIndex, audio1.currentTime);
+          }
+        }
+      }
+
+      if (devanagariWordTimings) {
+        for (var i = 0; i < devanagariWordTimings.length; i++) {
+          if (i !== devanagariPlayingWordIndex && audio1.currentTime >= devanagariWordTimings[i] && audio1.currentTime < devanagariWordTimings[i+1]) {
+            devanagariPlayingWordIndex = i;
+            devanagariElem.innerHTML = devanagariOrigHTML;
+            devanagariElem.innerHTML = highlightWord(devanagariElem, devanagariPlayingWordIndex, audio1.currentTime);
+          }
+        }
+      }
+    },false);
+
+    audio1.addEventListener('pause', function() {
+      //console.log("Event - pause");
+    },false);
+
+    audio1.addEventListener('ended', function() {
+      //console.log("Event - ended");
+
+      devanagariPlayingWordIndex = -1;
+      document.getElementById("devanagari").innerHTML = devanagariOrigHTML;
+
+      iastPlayingWordIndex = -1;
+      document.getElementById("iast").innerHTML = iastOrigHTML;
+    },false);
+  </script>
+</body>
+</html>
