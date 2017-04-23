@@ -1,1 +1,1 @@
-web: ./bg
+web: main
