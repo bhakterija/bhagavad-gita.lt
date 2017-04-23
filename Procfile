@@ -1,1 +1,1 @@
-web: main
+web: bhagavad-gita.lt

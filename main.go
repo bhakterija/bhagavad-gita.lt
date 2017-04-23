@@ -52,12 +52,12 @@ var router *mux.Router
 func main() {
 	port := os.Getenv("PORT")
 
-	if port == "" {
+	if port == "" && len(os.Args) > 1 {
 		port = os.Args[1]
 	}
 
 	if port == "" {
-		log.Fatal("$PORT must be set")
+		log.Fatal("Port number must be specified either as a first argument or $PORT environment variable")
 	}
 
 	loadJSON()
