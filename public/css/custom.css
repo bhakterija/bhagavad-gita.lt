@@ -29,6 +29,13 @@ h4
   text-align: center;
 }
 
+.verse-list-div
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
 .synonyms-div
 {
   margin-left: auto;

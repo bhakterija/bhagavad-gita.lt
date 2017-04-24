@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="{{ .languageId }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="{{.keywords}}">
+  <title>{{.title}}</title>
+  <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/public/css/custom.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav> <!-- Prev/Up/Next navigation -->
+    <div>
+      <table style="margin-left: auto; margin-right: auto; width: 20%" border="1">
+        <tr>
+        <td style="text-align: center;">
+          {{ .prev }}
+        </td>
+        <td style="text-align: center;">
+          {{ .up }}
+        </td>
+        <td style="text-align: center;">
+          {{ .next }}
+        </td>
+      </table>
+    </div>
+  </nav>
+
+  <h2>{{ .chapterNum }}. {{ .chapterName }}</h2>
+
+  <div class="verse-list-div" lang="{{ .languageId }}">
+    <p>
+    {{range .verses }}
+      {{.}}<br>
+    {{end}}
+    </p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+  <script src="/public/js/bootstrap.min.js"></script>
+</body>

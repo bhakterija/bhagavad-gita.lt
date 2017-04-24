@@ -2,8 +2,8 @@
 <html lang="{{ .languageId }}">
 <head>
   <meta charset="utf-8">
-  <meta name="keywords" content="{{.keywords}}">
-  <title>{{.title}}</title>
+  <meta name="keywords" content="{{ .keywords }}">
+  <title>{{ .title }}</title>
   <link href="/public/css/bootstrap.min.css" rel="stylesheet">
   <link href="/public/css/custom.css" rel="stylesheet">
 </head>
@@ -14,19 +14,19 @@
       <table style="margin-left: auto; margin-right: auto; width: 20%" border="1">
         <tr>
   			<td style="text-align: center;">
-          {{.prev}}
+          {{ .prev }}
         </td>
         <td style="text-align: center;">
-  				<a href="#">^</a>
+  				{{ .up }}
   			</td>
         <td style="text-align: center;">
-          {{.next}}
+          {{ .next }}
         </td>
       </table>
     </div>
   </nav>
 
-<h2>Verse {{.chapterNum}}.{{.verseNum}}</h2>
+  <h2>Posmas {{ .chapterNum }}.{{ .verseNum }}</h2>
 
   <div class="devanagari-div" lang="sa-deva">
     <p id="devanagari">
@@ -54,15 +54,15 @@
   </div>
 
   <div class="synonyms-div">
-    <p>{{.synonyms}}</p>
+    <p>{{ .synonyms }}</p>
   </div>
 
-  <div class="translation-div" lang="{{.languageId}}">
+  <div class="translation-div" lang="{{ .languageId }}">
     <h3>Vertimas</h3>
     <p>{{.verse.Translation}}</p>
   </div>
 
-  <div class="purport-div" lang="{{.languageId}}">
+  <div class="purport-div" lang="{{ .languageId }}">
     <h3>Komentaras</h3>
     {{range .verse.Purport }}
       {{.}}
@@ -76,13 +76,13 @@
     var devanagariOrigHTML = devanagariElem.innerHTML;
     var devanagariPlayingWordIndex = -1; // currently playing word
     // var devanagariWordTimings = [0,      3.8,      5.8, 7.2,9, 9, 10, 11, 13.5, 16, 18, 21];
-    var devanagariWordTimings = {{.verse.DevanagariWordTimings}};
+    var devanagariWordTimings = {{ .verse.DevanagariWordTimings }};
 
     var iastElem = document.getElementById("iast");
     var iastOrigHTML = iastElem.innerHTML;
     var iastPlayingWordIndex = -1;
     // var iastWordTimings       = [0, 1.7, 3.8, 4.5, 5.8, 7.2,   9, 10, 11, 13.5, 16, 18, 21];
-    var iastWordTimings       = {{.verse.IASTWordTimings}};
+    var iastWordTimings       = {{ .verse.IASTWordTimings }};
 
     function highlightWord(element, hiIndex, playerTime) {
       var text = "";
@@ -110,14 +110,12 @@
     var audio1 = document.getElementById('audio1');
 
     audio1.addEventListener('canplay', function() {
-      // console.log("Event - canplay");
       devanagariPlayingWordIndex = -1;
       iastPlayingWordIndex = -1;
     },false);
 
-    audio1.addEventListener('play', function() {
-      // console.log("Event - play");
-    },false);
+    // audio1.addEventListener('play', function() {
+    // },false);
 
     audio1.addEventListener('timeupdate', function() {
       if (iastWordTimings) {
@@ -141,13 +139,10 @@
       }
     },false);
 
-    audio1.addEventListener('pause', function() {
-      //console.log("Event - pause");
-    },false);
+    // audio1.addEventListener('pause', function() {
+    // },false);
 
     audio1.addEventListener('ended', function() {
-      //console.log("Event - ended");
-
       devanagariPlayingWordIndex = -1;
       document.getElementById("devanagari").innerHTML = devanagariOrigHTML;
 
