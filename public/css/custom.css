@@ -29,6 +29,18 @@ h4
   text-align: center;
 }
 
+td
+{
+  padding: 6px;
+}
+
+.toc-div
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
 .verse-list-div
 {
   margin-left: auto;

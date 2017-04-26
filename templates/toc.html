@@ -9,28 +9,19 @@
 </head>
 
 <body>
-  <nav> <!-- Prev/Up/Next navigation -->
-    <div>
-      <table style="margin-left: auto; margin-right: auto; width: 20%" border="1">
-        <tr>
-        <td style="text-align: center;">
-          {{ .prev }}
-        </td>
-        <td style="text-align: center;">
-          {{ .up }}
-        </td>
-        <td style="text-align: center;">
-          {{ .next }}
-        </td>
-      </table>
-    </div>
-  </nav>
+  <h3>Turinys</h3>
 
-  <h2>{{ .chapterNum }}. {{ .chapterName }}</h2>
-
-  <div class="verse-list-div" lang="{{ .languageId }}">
+  <div class="toc-div" lang="{{ .languageId }}">
     <table>
-    {{range .verses }}
+      <tr>
+        <td></td>
+        <td>Įvadas</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Pratarmė</td>
+      </tr>
+      {{range .chapters }}
       <tr>
         {{.}}
       </tr>
