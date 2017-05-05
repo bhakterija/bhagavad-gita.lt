@@ -33,7 +33,7 @@ type Verse struct {
 	IAST                  []string
 	IASTWordTimings       []float32
 	SynonymsSanskrit      []string
-	SynonymsTranslation   []string
+	SynonymsTranslation   []template.HTML
 	Translation           template.HTML
 	Purport               []template.HTML
 	PrevVerse             [2]int // [ChapterNum, VerseNum] - Num, not Idx!

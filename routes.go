@@ -228,13 +228,13 @@ func LangChapterVerseHandler(w http.ResponseWriter, r *http.Request) {
 		upHref = template.HTML(fmt.Sprintf(`<a href="%s">^</a>`, upURL.String()))
 
 		// Join Synonyms string
-		synonyms := ""
-		separator := "; "
+		var synonyms template.HTML
+		var separator template.HTML = "; "
 		for i, v := range BG.Chapters[chapterNum-1].Verses[verseNum-1].SynonymsSanskrit {
 			if i == len(BG.Chapters[chapterNum-1].Verses[verseNum-1].SynonymsSanskrit)-1 { // last entry
 				separator = "."
 			}
-			synonyms += v + "—" + BG.Chapters[chapterNum-1].Verses[verseNum-1].SynonymsTranslation[i] + separator
+			synonyms += template.HTML(v) + "—" + BG.Chapters[chapterNum-1].Verses[verseNum-1].SynonymsTranslation[i] + separator
 		}
 
 		data := map[string]interface{}{
