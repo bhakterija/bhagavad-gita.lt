@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"path"
 	"strconv"
-	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -132,9 +131,10 @@ func LangChapterHandler(w http.ResponseWriter, r *http.Request) {
 				panic(err)
 			}
 			verseNumHref := template.HTML(fmt.Sprintf(`<a href="%s">%v.%v</a>`, verseURL.String(), chapter.Num, verse.Num))
-			verseIASTHref := template.HTML(fmt.Sprintf(`<a href="%s">%v</a>`, verseURL.String(), strings.Join(verse.IAST, " | ")))
+			// verseIASTHref := template.HTML(fmt.Sprintf(`<a href="%s">%v</a>`, verseURL.String(), strings.Join(verse.IAST, " | ")))
 			verseTranslationHref := template.HTML(fmt.Sprintf(`<a href="%s">%v</a>`, verseURL.String(), verse.Translation))
-			versesList = append(versesList, "<td rowspan=\"2\" valign=\"top\">"+verseNumHref+"</td><td>"+verseIASTHref+"</td></tr> <tr><td>"+verseTranslationHref+"</td></tr>")
+			// versesList = append(versesList, "<td rowspan=\"2\" valign=\"top\">"+verseNumHref+"</td><td>"+verseIASTHref+"</td></tr> <tr><td>"+verseTranslationHref+"</td></tr>")
+			versesList = append(versesList, "<td>"+verseNumHref+"</td><td>"+verseTranslationHref+"</td></tr>")
 		}
 		data := map[string]interface{}{
 			"languageId":  vars["language"],
